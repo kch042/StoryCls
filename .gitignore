@@ -1,2 +1,6 @@
 .cache/
 test/
+data/
+__pycache__/
+model/
+__testdata.csv

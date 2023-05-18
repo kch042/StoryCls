@@ -1,0 +1,11 @@
+python run_story.py \
+--do_train \
+--do_eval \
+--train_file ./__testdata.csv \
+--validation_file ./__testdata.csv \
+--model_name_or_path hfl/chinese-roberta-wwm-ext \
+--output_dir ./model/ \
+--cache_dir ./.cache/ \
+--learning_rate 1e-4 \
+--num_train_epochs 10 \
+--per_device_train_batch_size 16 \
