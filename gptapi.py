@@ -1,41 +1,56 @@
 import os
-import openai
 import csv
 
-openai.api_key = 'The_API_KEY'
+from tqdm.auto import tqdm
+import openai
 
-def generate_response(article):
-    prompt = f"Following is the definition of a story: A series of events incited by conflict, which drives the protagonist/hero to find a solution, or a series of events developed from disbalance to rebalance. Please determine if the following article is a story or not. If it is, please return 1; if it isn’t, please return 0. Here is the article: {article}\n"
+'''
+A label generator of training data for story classifier using ChatGPT
+'''
 
-    response = openai.Completion.create(
-        engine='text-davinci-003',  
-        prompt=prompt,
-        max_tokens=200, 
-        temperature=0.7,
-        n=1,
-        stop=None,
+# Config
+openai.api_key = 'YOUR_API_KEY'
+data_dir = "./data2"
+label_path = "./raw_label.csv"
+
+
+def generate_label(article) -> str:
+    messages = [
+        {"role": "system",
+         "content": "你是一個要分類內容是否為故事的的助手，是的話回答1，不是的回答0，不需要多餘的解釋。以下是故事的定義：A series of events incited by conflict, which drives the protagonist/hero to find a solution, or a series of events developed from disbalance to rebalance."},
+        {"role": "user",
+         "content": f"內容：{article}"},
+    ]
+
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=messages,
     )
-        
-    chatbot_response = response.choices[0].text.strip()
-    return chatbot_response
 
+    label = response["choices"][0]["message"]["content"]
+    return label
 
-csv_file = 'C:/Users/USER/Desktop/result.csv'
-with open(csv_file, 'w', newline='') as cfile:
-    writer = csv.writer(cfile)
-    writer.writerow(['Article Number', 'Label'])
+                
+def main():
+    labels = {}
 
-    number = 0
-    directory = "C:/Users/USER/Desktop/data"
-    file_list = os.listdir(directory)
-    for filename in file_list:
+    # generate labels
+    for filename in tqdm(os.listdir(data_dir)):
         if filename.endswith(".txt"):
-            file_path = os.path.join(directory, filename)
+            article_id = filename.split(".")[0]
+            file_path = os.path.join(data_dir, filename)
             with open(file_path, 'r', encoding='utf-8') as file:
                 article = file.read()
-                label = generate_response(article)
-                writer.writerow([number, label])
-                number = number + 1
-                
-                
-                
+                label = generate_label(article)
+                labels[int(article_id)] = label
+
+    # save
+    with open(label_path, "w", newline='') as fp:
+        writer = csv.writer(fp)
+        writer.writerow(["id", "label"])
+
+        for article_id in sorted(labels.keys()):
+            writer.writerow([article_id, labels[article_id]])
+
+if __name__ == "__main__":
+    main()
