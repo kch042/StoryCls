@@ -5,7 +5,7 @@ import csv
 openai.api_key = 'The_API_KEY'
 
 def generate_response(article):
-    prompt = f"Following is the definition of a story: A series of events incited by conflict, which drives the protagonist/hero to find a solution, or a series of events developed from disbalance to rebalance. Please determine if the following article is a story or not. If it is, please return 1; if it isn’t, please return 0. Here is the article: {article}\nChatGPT: "
+    prompt = f"Following is the definition of a story: A series of events incited by conflict, which drives the protagonist/hero to find a solution, or a series of events developed from disbalance to rebalance. Please determine if the following article is a story or not. If it is, please return 1; if it isn’t, please return 0. Here is the article: {article}\n"
 
     response = openai.Completion.create(
         engine='text-davinci-003',  
@@ -16,7 +16,7 @@ def generate_response(article):
         stop=None,
     )
         
-    chatbot_response = response.choices[0].text.strip().split('ChatGPT:', 1)[-1].strip()
+    chatbot_response = response.choices[0].text.strip()
     return chatbot_response
 
 
