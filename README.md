@@ -15,10 +15,13 @@ A transformer-based Chinese story classfier.
 
 ## Label Generation from ChatGPT
 Inside `gptapi.py`, we encapsulate
-    - story definition
-    - output format
-    - `batch_size` stories
+
+- story definition
+- output format
+- `batch_size` stories
+
 into 1 request to ChatGPT
+
 
 For example, one request might contain messages like
 ```
