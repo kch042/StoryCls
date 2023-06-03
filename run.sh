@@ -6,7 +6,7 @@ python run_story.py \
 --validation_file ./data/test_label.csv \
 --model_name_or_path hfl/chinese-roberta-wwm-ext \
 --evaluation_strategy epoch \
---output_dir ./model/ep10_bs32 \
+--output_dir ./model/trial1 \
 --cache_dir ./.cache/ \
 --learning_rate 1e-4 \
 --num_train_epochs 10 \
