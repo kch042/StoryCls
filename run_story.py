@@ -165,7 +165,7 @@ def main():
     # TODO: data cleaning
     def preprocess_function(examples):
         # convert id to text
-        texts = [Path(data_args.data_dir, f"{fid}.txt").read_text().strip() for fid in examples[sentence1_key]]
+        texts = [Path(data_args.story_dir, f"{fid}.txt").read_text().strip() for fid in examples[sentence1_key]]
         
         # Tokenize the texts
         result = tokenizer(texts, padding=padding, max_length=max_seq_length, truncation=True)

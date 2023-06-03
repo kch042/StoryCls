@@ -71,8 +71,8 @@ class DataTrainingArguments:
         },
     )
 
-    data_dir: Optional[str] = field(
-        default="./data", metadata={"help": "The directory to text data."}
+    story_dir: Optional[str] = field(
+        default="./data/stories", metadata={"help": "The directory to story text data."}
     )
     train_file: Optional[str] = field(
         default=None, metadata={"help": "A csv file containing the training data. \

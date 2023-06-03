@@ -13,9 +13,9 @@ A label generator of training data for story classifier using ChatGPT
 '''
 
 # Config
-openai.api_key = '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'
-data_dir = "./data50"
-label_path = "./raw_label50.csv"
+openai.api_key = 'YOUR_API_KEY'
+data_dir = "./data/stories"
+label_path = "./data/raw_label.csv"
 batch_size = 5
 
 
@@ -40,7 +40,7 @@ def generate_label(article) -> str:
     return label
 
 
-@retry(wait=wait_random_exponential(min=1, max=30), stop=stop_after_attempt(3), reraise=True, retry=retry_if_exception_type(RateLimitError))
+@retry(wait=wait_random_exponential(min=5, max=30), stop=stop_after_attempt(4), reraise=True, retry=retry_if_exception_type(RateLimitError))
 def generate_batched_labels(articles: List[str]) -> List[str]:
     '''
     To balance between the cost and efficiency, batch multple articles into one request
@@ -116,6 +116,8 @@ def main():
                 if len(batched_labels) == len(batched_article_ids):
                     for aid, label in zip(batched_article_ids, batched_labels):
                         labels[aid] = label
+            except RateLimitError:
+                time.sleep(60)
             except:
                 pass
 

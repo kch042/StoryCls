@@ -6,3 +6,4 @@ model/
 __testdata.csv
 test.ipynb
 story.json
+nohup*.out

@@ -1,11 +1,13 @@
 python run_story.py \
 --do_train \
 --do_eval \
---train_file ./__testdata.csv \
---validation_file ./__testdata.csv \
+--story_dir ./data/stories \
+--train_file ./data/train_label.csv \
+--validation_file ./data/test_label.csv \
 --model_name_or_path hfl/chinese-roberta-wwm-ext \
---output_dir ./model/ \
+--evaluation_strategy epoch \
+--output_dir ./model/ep10_bs32 \
 --cache_dir ./.cache/ \
 --learning_rate 1e-4 \
 --num_train_epochs 10 \
---per_device_train_batch_size 16 \
+--per_device_train_batch_size 32 
