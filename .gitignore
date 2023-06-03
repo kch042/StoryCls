@@ -1,9 +1,7 @@
 .cache/
 test/
-data/
 __pycache__/
 model/
 __testdata.csv
 test.ipynb
-story.json
 nohup*.out
