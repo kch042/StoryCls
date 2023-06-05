@@ -211,7 +211,7 @@ def main():
             logger.info(f"Sample {index} of the training set: {train_dataset[index]}.")
 
     def compute_metrics(p: EvalPrediction) -> Dict[str, float]:
-        # Exact Match
+        #  Accuracy
         preds = p.predictions.argmax(axis=1)
         refs = p.label_ids
 

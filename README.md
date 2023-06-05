@@ -38,7 +38,7 @@ For example, one request might contain messages like
 We batch multiple articles into 1 request (instead of 1 request per article) to 
 - reduce the api cost
 - increase the label generation speed
-- prevent rate limit error (openai has a limit on the number of reqeusts per minute)
+- prevent rate limit error (openai has a limit on the number of requests per minute)
 
 
 ## Model
@@ -46,7 +46,7 @@ Fine-tuned on the Chinese roberta model [`hfl/chinese-roberta-wwm-ext`](https://
 
 
 ## Result
-- metric: exact match
+- metric: accuracy
 - test set: 0.562
 
 
